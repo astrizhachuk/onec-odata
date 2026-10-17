@@ -298,8 +298,10 @@ cmd_link() {
     else
         nav="e1cib/list/${NAV_KIND[$prefix]}.$name"
     fi
+    # Ссылка веб-клиента - первой строкой. Кириллица после # не кодируется: браузеры ее принимают,
+    # а закодированная ссылка втрое длиннее и рвется при переносе строк в терминале.
+    [[ -z "${ONEC_WEB_URL-}" ]] || printf '%s/#%s\n' "${ONEC_WEB_URL%/}" "$nav"
     printf '%s\n' "$nav"
-    [[ -z "${ONEC_WEB_URL-}" ]] || printf '%s/#%s\n' "${ONEC_WEB_URL%/}" "$(urlenc "$nav" "/.?=")"
 }
 
 cmd_sets() {
